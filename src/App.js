@@ -11,24 +11,24 @@ import Table from "./components/TableComponent";
 const head = [
     {
         label: 'Name',
-        key: 'full_name',
+        key: 'field0',
         sort: true,
     },
     {
         label: 'Email',
-        key: 'email_address',
+        key: 'field1',
         sort: true,
     },
     {
         label: 'Balance',
-        key: 'balance',
+        key: 'field2',
         sort: function(rowA, rowB, sortingKey) {
             return rowA.balance > rowB.balance ? 1 : -1;
         },
     },
     {
         label: 'Test1',
-        key: 'test1',
+        key: 'field3',
         sort: true,
     },
 ];

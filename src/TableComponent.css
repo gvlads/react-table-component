@@ -1,12 +1,25 @@
+
+html {
+    font-family: sans-serif;
+}
+
 table {
-  border-collapse: collapse; /* Display double lines as single lines */
+    border-collapse: collapse; /* Display double lines as single lines */
+    border-spacing: 0;
+    width: 100%;
 }
-th {
-    text-align: left;
-}
-td, th {
+
+tr, th, td {
     border: 1px solid #ddd;
-    padding: 4px;
+}
+
+th, td {
+    padding: 1em;
+}
+
+th {
+    font-weight: 400;
+    text-align: left;
 }
 
 .pagination>li {

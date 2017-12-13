@@ -17,15 +17,76 @@ function query(tableData = "", startIndex = null, endIndex = null) {
 }
 
 class TableHeader extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            date: [],
+            sort: {
+                column: null,
+                direction: 'asc',
+            },
+        };
+
+        this.onSort = this.onSort.bind(this)
+    }
+
+    onSort = (column) => (e) => {
+
+        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'asc';
+        const sortedData = this.props.data.sort((a, b) => {
+
+            if (a[column] < b[column]) {
+                return -1;
+            }
+            else if (a[column] > b[column]) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        });
+
+        if (direction === 'desc') {
+            sortedData.reverse();
+        }
+
+        this.setState({
+            data: sortedData,
+            sort: {
+                column,
+                direction,
+            }
+        });
+
+    };
+
+    setArrow = (column) => {
+        let className = 'sort-direction';
+
+        if (this.state.sort.column === column) {
+            className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
+        }
+
+        console.log(className);
+
+        return className;
+    };
+
     render() {
 
-        const {head} = this.props;
+        const {head, data} = this.props;
 
         let header_row = [];
 
-        head.forEach(function(data) {
-            header_row.push(<th key={data.key}>{data.label}</th>);
-        });
+        // head.forEach(function(data) {
+        //     header_row.push(<th key={data.key} onClick={this.onSort(data.key)}>{data.label}</th>);
+        // });
+
+        head.map(function(data) {
+            header_row.push(<th key={data.key} onClick={this.onSort(data.key)}>{data.label}</th>);
+        }, this);
 
         const header = (
             <tr>
@@ -90,7 +151,7 @@ class Table extends React.Component {
         return (
             <div>
                 <table>
-                    <TableHeader head={this.props.head} />
+                    <TableHeader data={this.props.data} head={this.props.head} />
                     <TableRow data={query(this.props.data, this.state.startIndex, this.state.endIndex)} head={this.props.head} />
                 </table>
                 <Pagination
